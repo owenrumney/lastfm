@@ -1,15 +1,26 @@
 package lastfm.analysis.processors
 
 import lastfm.analysis.ListeningDataParser
+import lastfm.analysis.ListeningDataParser.TrackDetail
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
 class PartBProcessor {
-  def process(sc: SparkContext, dataFilePath: String): RDD[(String, Int)] = {
+  /** *
+    * Returns the 100 most played songs and the number of times played
+    *
+    * @param sc           - the SparkContext to use
+    * @param dataFilePath - the path to the input file
+    * @return - an RDD with the ((artist, track), count))
+    */
+  def process(sc: SparkContext, dataFilePath: String): RDD[(TrackDetail, Int)] = {
     val listenRecords = sc.textFile(dataFilePath)
-      .map(ListeningDataParser.getArtistTrackListenData)
-      .groupBy(_.userId)
+      .map(d => (ListeningDataParser.getArtistTrackListenData(d), 1))
 
-    listenRecords.mapValues(_.toList.distinct.length)
+    listenRecords.reduceByKey(_ + _)
+      .sortBy(_._2, ascending = false)
+      .zipWithIndex()
+      .filter(_._2 < 100)
+      .keys
   }
 }

@@ -9,5 +9,6 @@ val scalaTestVersion = "3.0.5"
 
 libraryDependencies ++= Seq(
   "org.apache.spark" % "spark-core_2.11" % sparkVersion,
-  "org.scalatest" %% "scalatest" % scalaTestVersion % Test
+  "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
+  "org.scalamock" %% "scalamock" % "4.1.0" % Test
 )
