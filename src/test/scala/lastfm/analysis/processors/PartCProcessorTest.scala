@@ -4,7 +4,6 @@ import java.time.ZoneId
 
 import lastfm.analysis.LocalContextProvider
 import org.apache.spark.SparkContext
-import org.apache.spark.SparkConf
 import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfter
 
@@ -16,7 +15,7 @@ class PartCProcessorTest extends FunSuite with BeforeAndAfter {
   var sc: SparkContext = _
 
   before {
-    sc =  LocalContextProvider("testContext")
+    sc = LocalContextProvider("testContext")
   }
 
   test("spark context created and local") {

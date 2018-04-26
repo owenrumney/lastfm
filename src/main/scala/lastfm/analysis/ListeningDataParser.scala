@@ -42,4 +42,5 @@ object ListeningDataParser {
   case class ListenEvent(userId: String, timestamp: LocalDateTime, artist: String, track: String)
 
   case class TrackDetail(artist: String, track: String)
+
 }

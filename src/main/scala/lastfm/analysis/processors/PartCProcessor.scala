@@ -43,4 +43,5 @@ class PartCProcessor extends Serializable {
   }
 
   case class Session(firstTs: LocalDateTime, var lastTs: LocalDateTime, var tracks: List[(String, String)])
+
 }

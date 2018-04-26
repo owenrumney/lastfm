@@ -19,6 +19,6 @@ object PartADriver {
     results.saveAsTextFile(outputPath)
 
     // generate a formatted output
-    results.foreach(r=>println(s"${r._1}: ${r._2}"))
+    results.foreach(r => println(s"${r._1}: ${r._2}"))
   }
 }

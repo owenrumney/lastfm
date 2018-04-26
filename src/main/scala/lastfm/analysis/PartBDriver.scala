@@ -20,6 +20,6 @@ object PartBDriver {
       .saveAsTextFile(outputPath)
 
     // generate a formatted output
-    results.foreach(r=>println(s"${r._1.artist} - ${r._1.track}: ${r._2}"))
+    results.foreach(r => println(s"${r._1.artist} - ${r._1.track}: ${r._2}"))
   }
 }
