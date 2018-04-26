@@ -1,4 +1,4 @@
-package lastfm.analysis
+package lastfm.analysis.rdd
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf

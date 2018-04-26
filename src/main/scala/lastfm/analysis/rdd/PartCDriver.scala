@@ -1,8 +1,8 @@
-package lastfm.analysis
+package lastfm.analysis.rdd
 
-import lastfm.analysis.processors.PartCProcessor
-import org.apache.log4j.Logger
+import lastfm.analysis.rdd.processors.PartCProcessor
 import org.apache.log4j.Level
+import org.apache.log4j.Logger
 
 object PartCDriver {
   def main(args: Array[String]): Unit = {
@@ -13,15 +13,15 @@ object PartCDriver {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
-    val results = new PartCProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath)
+    val results = new PartCProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath).cache()
     // save output
     results
-      .map(r => (r.firstTs, r.lastTs, r.tracks.reverse))
+      .map(r => (r.userId, r.firstTs, r.lastTs, r.tracks.reverse))
       .saveAsTextFile(outputPath)
 
-    // print output
+    // write to console for output list - Only using because its a small dataset
     results.foreach(r => {
-      println(s"Start: ${r.firstTs}, End: ${r.lastTs}")
+      println(s"UserId: ${r.userId}, Start: ${r.firstTs}, End: ${r.lastTs}")
       r.tracks.reverse.foreach(t => println(s"\t${t._1} - ${t._2}"))
     })
   }

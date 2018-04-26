@@ -1,11 +1,11 @@
-package lastfm.analysis.processors
+package lastfm.analysis.rdd.processors
 
-import lastfm.analysis.LocalContextProvider
+import lastfm.analysis.rdd.LocalContextProvider
 import org.apache.spark.SparkContext
 import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfter
 
-class PartAProcessorTest extends FunSuite with BeforeAndAfter {
+class PartBProcessorTest extends FunSuite with BeforeAndAfter {
 
   val CLEAN_SAMPLE_DATA = "src/test/resources/listen_clean_sample.tsv"
   val INCOMPLETE_SAMPLE_DATA = "src/test/resources/listen_incomplete_sample.tsv"
@@ -22,9 +22,10 @@ class PartAProcessorTest extends FunSuite with BeforeAndAfter {
   }
 
   test("sample data correctly processed") {
-    val result = new PartAProcessor().process(sc, CLEAN_SAMPLE_DATA).collect()
-    assert(result.length === 1)
-    assert(result.head._1 === "user_001000")
-    assert(result.head._2 === 8)
+    val result = new PartBProcessor().process(sc, CLEAN_SAMPLE_DATA).collect()
+    assert(result.length === 8)
+    assert(result.head._1.artist === "Wilco")
+    assert(result.head._1.track === "Impossible Germany")
+    assert(result.head._2 === 2)
   }
 }

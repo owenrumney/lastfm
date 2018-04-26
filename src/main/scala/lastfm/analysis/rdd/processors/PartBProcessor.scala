@@ -1,7 +1,7 @@
-package lastfm.analysis.processors
+package lastfm.analysis.rdd.processors
 
-import lastfm.analysis.ListeningDataParser
-import lastfm.analysis.ListeningDataParser.TrackDetail
+import lastfm.analysis.rdd.ListeningDataParser
+import lastfm.analysis.rdd.ListeningDataParser.TrackDetail
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 

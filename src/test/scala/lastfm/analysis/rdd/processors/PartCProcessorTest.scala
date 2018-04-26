@@ -1,8 +1,8 @@
-package lastfm.analysis.processors
+package lastfm.analysis.rdd.processors
 
 import java.time.ZoneId
 
-import lastfm.analysis.LocalContextProvider
+import lastfm.analysis.rdd.LocalContextProvider
 import org.apache.spark.SparkContext
 import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfter

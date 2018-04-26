@@ -1,7 +1,9 @@
-package lastfm.analysis
+package lastfm.analysis.rdd
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+import scala.util.Try
 
 object ListeningDataParser {
 
@@ -13,7 +15,7 @@ object ListeningDataParser {
     */
   def getListenEvents(row: String): ListenEvent = {
     val Array(userId, ts, _, artist, _, track) = row.split("\t")
-    val timestamp = LocalDateTime.parse(ts, DateTimeFormatter.ISO_DATE_TIME)
+    val timestamp = Try(LocalDateTime.parse(ts, DateTimeFormatter.ISO_DATE_TIME)).getOrElse(LocalDateTime.MAX)
     ListenEvent(userId, timestamp, artist, track)
   }
 
@@ -35,7 +37,7 @@ object ListeningDataParser {
     * @return a [[TrackDetail]]
     */
   def getArtistTrackListenData(row: String): TrackDetail = {
-    val Array(userId, _, _, artist, _, track) = row.split("\t")
+    val Array(_, _, _, artist, _, track) = row.split("\t")
     TrackDetail(artist, track)
   }
 

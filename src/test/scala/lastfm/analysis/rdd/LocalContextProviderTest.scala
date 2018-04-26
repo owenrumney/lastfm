@@ -1,4 +1,4 @@
-package lastfm.analysis
+package lastfm.analysis.rdd
 
 import org.scalatest.FunSuite
 
@@ -8,5 +8,6 @@ class LocalContextProviderTest extends FunSuite {
     val context = LocalContextProvider("testJob")
     assert(context.isLocal)
     assert(!context.isStopped)
+    context.stop()
   }
 }

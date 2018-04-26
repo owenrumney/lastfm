@@ -1,8 +1,8 @@
-package lastfm.analysis
+package lastfm.analysis.rdd
 
-import lastfm.analysis.processors.PartAProcessor
-import org.apache.log4j.Logger
+import lastfm.analysis.rdd.processors.PartAProcessor
 import org.apache.log4j.Level
+import org.apache.log4j.Logger
 
 object PartADriver {
   def main(args: Array[String]): Unit = {
@@ -14,11 +14,11 @@ object PartADriver {
     assert(!outputPath.isEmpty)
 
 
-    val results = new PartAProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath)
+    val results = new PartAProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath).cache()
     // output raw result to file
     results.saveAsTextFile(outputPath)
 
-    // generate a formatted output
+    // write to console for output list - Only using because its a small dataset
     results.foreach(r => println(s"${r._1}: ${r._2}"))
   }
 }

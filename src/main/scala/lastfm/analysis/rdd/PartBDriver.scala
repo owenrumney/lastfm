@@ -1,8 +1,8 @@
-package lastfm.analysis
+package lastfm.analysis.rdd
 
-import lastfm.analysis.processors.PartBProcessor
-import org.apache.log4j.Logger
+import lastfm.analysis.rdd.processors.PartBProcessor
 import org.apache.log4j.Level
+import org.apache.log4j.Logger
 
 object PartBDriver {
   def main(args: Array[String]): Unit = {
@@ -13,13 +13,13 @@ object PartBDriver {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
-    val results = new PartBProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath)
+    val results = new PartBProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath).cache()
     // save the output
     results
       .map(rd => (rd._1.artist, rd._1.track, rd._2))
       .saveAsTextFile(outputPath)
 
-    // generate a formatted output
+    // write to console for output list - Only using because its a small dataset
     results.foreach(r => println(s"${r._1.artist} - ${r._1.track}: ${r._2}"))
   }
 }
