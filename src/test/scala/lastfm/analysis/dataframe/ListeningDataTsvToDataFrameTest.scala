@@ -6,7 +6,7 @@ import org.apache.spark.sql.SparkSession
 import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfter
 
-class ListeningDataToDfTest extends FunSuite with BeforeAndAfter {
+class ListeningDataTsvToDataFrameTest extends FunSuite with BeforeAndAfter {
   val CLEAN_SAMPLE_DATA = "src/test/resources/listen_clean_sample.tsv"
   var spark: SparkSession = _
 
@@ -15,7 +15,7 @@ class ListeningDataToDfTest extends FunSuite with BeforeAndAfter {
   }
 
   test("test data loaded as dataframe") {
-    val result = ListeningDataToDf.createDataFrame(spark, CLEAN_SAMPLE_DATA).collect()
+    val result = ListeningDataTsvToDataFrame.createDataFrame(spark, CLEAN_SAMPLE_DATA).collect()
     assert(result.length === 9)
     assert(result.head(0) === "user_001000")
     assert(result.head(1) === Timestamp.valueOf("2008-01-27 22:19:07.0"))
