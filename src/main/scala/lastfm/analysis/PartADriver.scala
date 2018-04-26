@@ -15,6 +15,10 @@ object PartADriver {
 
 
     val results = new PartAProcessor().process(ContextProvider(getClass.getSimpleName), inputFilePath)
+    // output raw result to file
     results.saveAsTextFile(outputPath)
+
+    // generate a formatted output
+    results.foreach(r=>println(s"${r._1}: ${r._2}"))
   }
 }

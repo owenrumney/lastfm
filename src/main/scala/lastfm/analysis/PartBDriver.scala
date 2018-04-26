@@ -14,8 +14,12 @@ object PartBDriver {
     assert(!outputPath.isEmpty)
 
     val results = new PartBProcessor().process(ContextProvider(getClass.getSimpleName), inputFilePath)
+    // save the output
     results
       .map(rd => (rd._1.artist, rd._1.track, rd._2))
       .saveAsTextFile(outputPath)
+
+    // generate a formatted output
+    results.foreach(r=>println(s"${r._1.artist} - ${r._1.track}: ${r._2}"))
   }
 }
