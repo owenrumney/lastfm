@@ -2,10 +2,10 @@ package lastfm.analysis
 
 import org.scalatest.FunSuite
 
-class ContextProviderTest extends FunSuite {
+class LocalContextProviderTest extends FunSuite {
 
   test("config create") {
-    val context = ContextProvider("testJob")
+    val context = LocalContextProvider("testJob")
     assert(context.isLocal)
     assert(!context.isStopped)
   }

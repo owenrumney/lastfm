@@ -13,7 +13,7 @@ object PartBDriver {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
-    val results = new PartBProcessor().process(ContextProvider(getClass.getSimpleName), inputFilePath)
+    val results = new PartBProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath)
     // save the output
     results
       .map(rd => (rd._1.artist, rd._1.track, rd._2))

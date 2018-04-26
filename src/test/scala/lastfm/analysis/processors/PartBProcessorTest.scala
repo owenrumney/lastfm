@@ -1,5 +1,6 @@
 package lastfm.analysis.processors
 
+import lastfm.analysis.LocalContextProvider
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
 import org.scalatest.FunSuite
@@ -13,7 +14,7 @@ class PartBProcessorTest extends FunSuite with BeforeAndAfter {
   var sc: SparkContext = _
 
   before {
-    sc = SparkContext.getOrCreate(new SparkConf().setAppName("testContext").setMaster("local"))
+    sc =  LocalContextProvider("testContext")
   }
 
   test("spark context created and local") {
@@ -27,11 +28,5 @@ class PartBProcessorTest extends FunSuite with BeforeAndAfter {
     assert(result.head._1.artist === "Wilco")
     assert(result.head._1.track === "Impossible Germany")
     assert(result.head._2 === 2)
-  }
-
-  after {
-    if (!sc.isStopped) {
-      sc.stop()
-    }
   }
 }

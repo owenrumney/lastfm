@@ -13,7 +13,7 @@ object PartCDriver {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
-    val results = new PartCProcessor().process(ContextProvider(getClass.getSimpleName), inputFilePath)
+    val results = new PartCProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath)
     // save output
     results
       .map(r => (r.firstTs, r.lastTs, r.tracks.reverse))

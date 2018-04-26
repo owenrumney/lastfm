@@ -3,7 +3,7 @@ package lastfm.analysis
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
 
-object ContextProvider {
+object LocalContextProvider {
 
   def apply(jobName: String): SparkContext = {
     SparkContext.getOrCreate(getConfig(jobName))

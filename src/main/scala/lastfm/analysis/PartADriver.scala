@@ -14,7 +14,7 @@ object PartADriver {
     assert(!outputPath.isEmpty)
 
 
-    val results = new PartAProcessor().process(ContextProvider(getClass.getSimpleName), inputFilePath)
+    val results = new PartAProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath)
     // output raw result to file
     results.saveAsTextFile(outputPath)
 

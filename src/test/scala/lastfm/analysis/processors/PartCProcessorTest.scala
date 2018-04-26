@@ -2,6 +2,7 @@ package lastfm.analysis.processors
 
 import java.time.ZoneId
 
+import lastfm.analysis.LocalContextProvider
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
 import org.scalatest.FunSuite
@@ -15,7 +16,7 @@ class PartCProcessorTest extends FunSuite with BeforeAndAfter {
   var sc: SparkContext = _
 
   before {
-    sc = SparkContext.getOrCreate(new SparkConf().setAppName("testContext").setMaster("local"))
+    sc =  LocalContextProvider("testContext")
   }
 
   test("spark context created and local") {
@@ -32,11 +33,5 @@ class PartCProcessorTest extends FunSuite with BeforeAndAfter {
     assert(result(2).tracks.length === 4)
     assert(result(3).tracks.length === 1)
     assert(result(4).tracks.length === 1)
-  }
-
-  after {
-    if (!sc.isStopped) {
-      sc.stop()
-    }
   }
 }
