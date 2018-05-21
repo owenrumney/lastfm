@@ -10,6 +10,8 @@ val sparkVersion = "2.3.0"
 val scalaTestVersion = "3.0.5"
 val scalaMockVersion = "4.1.0"
 
+parallelExecution in ThisBuild := false
+
 libraryDependencies ++= Seq(
   "com.databricks" %% "spark-csv" % databricksVersion,
   "org.apache.spark" %% "spark-core" % sparkVersion,
