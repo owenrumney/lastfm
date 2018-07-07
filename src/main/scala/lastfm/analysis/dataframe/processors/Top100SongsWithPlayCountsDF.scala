@@ -5,7 +5,7 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.col
 
-object PartBDfProcessor {
+object Top100SongsWithPlayCountsDF {
 
   def apply(dataFilePath: String)(implicit spark: SparkSession): DataFrame = {
     val df = ListeningDataTsvToDataFrame.createDataFrame(spark, dataFilePath)

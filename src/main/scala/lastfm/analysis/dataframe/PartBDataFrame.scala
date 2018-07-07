@@ -1,6 +1,6 @@
 package lastfm.analysis.dataframe
 
-import lastfm.analysis.dataframe.processors.PartBDfProcessor
+import lastfm.analysis.dataframe.processors.Top100SongsWithPlayCountsDF
 import lastfm.analysis.dataframe.PartADataFrame.getClass
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
@@ -18,7 +18,7 @@ object PartBDataFrame {
 
     implicit val spark: SparkSession = LocalSessionProvider(getClass.getSimpleName)
 
-    val df = PartBDfProcessor(inputFilePath).cache()
+    val df = Top100SongsWithPlayCountsDF(inputFilePath).cache()
 
     df.write.csv(outputPath)
 

@@ -5,7 +5,7 @@ import org.apache.spark.sql.SparkSession
 import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfter
 
-class PartBDfProcessorTest extends FunSuite with BeforeAndAfter {
+class Top100SongsWithPlayCountsDFTest extends FunSuite with BeforeAndAfter {
 
   val CLEAN_SAMPLE_DATA = "src/test/resources/listen_clean_sample.tsv"
   val INCOMPLETE_SAMPLE_DATA = "src/test/resources/listen_incomplete_sample.tsv"
@@ -17,7 +17,7 @@ class PartBDfProcessorTest extends FunSuite with BeforeAndAfter {
   }
 
   test("sample data correctly processed") {
-    val result =PartBDfProcessor(CLEAN_SAMPLE_DATA).collect()
+    val result =Top100SongsWithPlayCountsDF(CLEAN_SAMPLE_DATA).collect()
     assert(result.length === 8)
     assert(result.head(0) === "Wilco")
     assert(result.head(1) === "Impossible Germany")

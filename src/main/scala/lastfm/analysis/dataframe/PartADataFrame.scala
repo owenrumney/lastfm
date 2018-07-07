@@ -1,6 +1,6 @@
 package lastfm.analysis.dataframe
 
-import lastfm.analysis.dataframe.processors.PartADfProcessor
+import lastfm.analysis.dataframe.processors.UniqueSongCountsByUserDF
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
 import org.apache.spark.sql.SparkSession
@@ -16,7 +16,7 @@ object PartADataFrame {
 
     implicit val spark: SparkSession = LocalSessionProvider(getClass.getSimpleName)
 
-    val df = PartADfProcessor(inputFilePath).cache()
+    val df = UniqueSongCountsByUserDF(inputFilePath).cache()
 
     // write raw to file
     df.write.csv(outputPath)

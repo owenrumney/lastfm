@@ -7,7 +7,7 @@ import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.functions.lit
 import org.apache.spark.sql.functions.concat
 
-object PartADfProcessor {
+object UniqueSongCountsByUserDF {
 
   /**
     * Returns a dataframe of the source data with userId and unique songs
