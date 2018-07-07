@@ -1,8 +1,8 @@
-package lastfm.analysis.rdd
+package lastfm.analysis
 
-import lastfm.analysis.rdd.processors.UniqueSongCountsByUser
-import lastfm.analysis.rdd.processors.Top100SongsWithPlayCounts
-import lastfm.analysis.rdd.processors.Longest10SessionsWithTrackLists
+import lastfm.analysis.processors.Longest10SessionsWithTrackLists
+import lastfm.analysis.processors.Top100SongsWithPlayCounts
+import lastfm.analysis.processors.UniqueSongCountsByUser
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext

@@ -1,4 +1,4 @@
-package lastfm.analysis.rdd
+package lastfm.analysis
 
 import java.nio.file.Files
 

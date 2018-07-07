@@ -1,4 +1,4 @@
-package lastfm.analysis.rdd
+package lastfm.analysis
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

@@ -1,11 +1,11 @@
-package lastfm.analysis.rdd.processors
+package lastfm.analysis.processors
 
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-import lastfm.analysis.rdd.ListeningDataParser
-import lastfm.analysis.rdd.ListeningDataParser.ListenEvent
+import lastfm.analysis.ListeningDataParser
+import lastfm.analysis.ListeningDataParser.ListenEvent
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
