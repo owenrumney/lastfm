@@ -1,9 +1,6 @@
 language: scala
+
 scala:
   2.11.11
-jobs:
-  include:
-    stage: test
-    script: sbt compile coverage test
-    stage: coverage check
-    script: sbt coverageReport
+
+script: "sbt ++$TRAVIS_SCALA_VERSION coverage test coverageReport"
