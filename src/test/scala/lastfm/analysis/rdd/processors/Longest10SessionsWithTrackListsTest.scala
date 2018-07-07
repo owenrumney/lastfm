@@ -7,7 +7,7 @@ import org.apache.spark.SparkContext
 import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfter
 
-class PartCProcessorTest extends FunSuite with BeforeAndAfter {
+class Longest10SessionsWithTrackListsTest extends FunSuite with BeforeAndAfter {
 
   val SESSION_SAMPLE_DATA = "src/test/resources/listen_session_sample.tsv"
   val INCOMPLETE_SAMPLE_DATA = "src/test/resources/listen_incomplete_sample.tsv"
