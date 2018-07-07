@@ -1,5 +1,8 @@
 .idea/*
-project/*
+
+*target
+project/project
+project/target
 
 *.class
 *.log
