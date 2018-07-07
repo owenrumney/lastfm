@@ -1,8 +1,9 @@
 package lastfm.analysis.rdd
 
-import lastfm.analysis.rdd.processors.PartAProcessor
+import lastfm.analysis.rdd.processors.UniqueSongCountsByUser
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
+import org.apache.spark.SparkContext
 
 object PartADriver {
   def main(args: Array[String]): Unit = {
@@ -13,8 +14,10 @@ object PartADriver {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
+    implicit val sparkContext: SparkContext = LocalContextProvider(getClass.getSimpleName)
 
-    val results = new PartAProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath).cache()
+
+    val results = UniqueSongCountsByUser(inputFilePath).cache()
     // output raw result to file
     results.saveAsTextFile(outputPath)
 

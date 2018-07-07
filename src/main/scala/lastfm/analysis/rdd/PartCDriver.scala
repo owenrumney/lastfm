@@ -1,8 +1,9 @@
 package lastfm.analysis.rdd
 
-import lastfm.analysis.rdd.processors.PartCProcessor
+import lastfm.analysis.rdd.processors.Longest10SessionsWithTrackLists
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
+import org.apache.spark.SparkContext
 
 object PartCDriver {
   def main(args: Array[String]): Unit = {
@@ -13,7 +14,9 @@ object PartCDriver {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
-    val results = new PartCProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath).cache()
+    implicit val sparkSession: SparkContext = LocalContextProvider(getClass.getSimpleName)
+
+    val results = Longest10SessionsWithTrackLists(inputFilePath).cache()
     // save output
     results
       .map(r => (r.userId, r.firstTs, r.lastTs, r.tracks.reverse))

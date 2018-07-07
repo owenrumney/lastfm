@@ -3,6 +3,7 @@ package lastfm.analysis.dataframe
 import lastfm.analysis.dataframe.processors.PartADfProcessor
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
+import org.apache.spark.sql.SparkSession
 
 object PartADataFrame {
   def main(args: Array[String]): Unit = {
@@ -13,8 +14,9 @@ object PartADataFrame {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
-    val spark = LocalSessionProvider(getClass.getSimpleName)
-    val df = new PartADfProcessor().process(spark, inputFilePath).cache()
+    implicit val spark: SparkSession = LocalSessionProvider(getClass.getSimpleName)
+
+    val df = PartADfProcessor(inputFilePath).cache()
 
     // write raw to file
     df.write.csv(outputPath)

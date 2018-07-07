@@ -12,7 +12,7 @@ class PartCProcessorTest extends FunSuite with BeforeAndAfter {
   val SESSION_SAMPLE_DATA = "src/test/resources/listen_session_sample.tsv"
   val INCOMPLETE_SAMPLE_DATA = "src/test/resources/listen_incomplete_sample.tsv"
 
-  var sc: SparkContext = _
+  implicit var sc: SparkContext = _
 
   before {
     sc = LocalContextProvider("testContext")
@@ -24,7 +24,7 @@ class PartCProcessorTest extends FunSuite with BeforeAndAfter {
   }
 
   test("sample data correctly processed") {
-    val result = new PartCProcessor().process(sc, SESSION_SAMPLE_DATA).collect()
+    val result =  Longest10SessionsWithTrackLists( SESSION_SAMPLE_DATA).collect()
       .sortBy(_.firstTs.atZone(ZoneId.systemDefault()).toEpochSecond)
     assert(result.length === 5)
     assert(result(0).tracks.length === 1)

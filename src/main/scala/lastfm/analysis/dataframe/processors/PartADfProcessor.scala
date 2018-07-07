@@ -7,7 +7,7 @@ import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.functions.lit
 import org.apache.spark.sql.functions.concat
 
-class PartADfProcessor {
+object PartADfProcessor {
 
   /**
     * Returns a dataframe of the source data with userId and unique songs
@@ -16,7 +16,7 @@ class PartADfProcessor {
     * @param dataFilePath - the file to load
     * @return
     */
-  def process(spark: SparkSession, dataFilePath: String): DataFrame = {
+  def apply(dataFilePath: String)(implicit spark: SparkSession): DataFrame = {
     val df = ListeningDataTsvToDataFrame.createDataFrame(spark, dataFilePath)
     df.select(col("_c0").alias("userId"), concat(col("_c3"), lit(" - "), col("_c5")))
       .distinct()

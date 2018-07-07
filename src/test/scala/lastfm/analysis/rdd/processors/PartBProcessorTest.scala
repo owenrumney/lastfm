@@ -10,7 +10,7 @@ class PartBProcessorTest extends FunSuite with BeforeAndAfter {
   val CLEAN_SAMPLE_DATA = "src/test/resources/listen_clean_sample.tsv"
   val INCOMPLETE_SAMPLE_DATA = "src/test/resources/listen_incomplete_sample.tsv"
 
-  var sc: SparkContext = _
+  implicit var sc: SparkContext = _
 
   before {
     sc = LocalContextProvider("testContext")
@@ -22,7 +22,7 @@ class PartBProcessorTest extends FunSuite with BeforeAndAfter {
   }
 
   test("sample data correctly processed") {
-    val result = new PartBProcessor().process(sc, CLEAN_SAMPLE_DATA).collect()
+    val result =  Top100SongsWithPlayCounts(CLEAN_SAMPLE_DATA).collect()
     assert(result.length === 8)
     assert(result.head._1.artist === "Wilco")
     assert(result.head._1.track === "Impossible Germany")

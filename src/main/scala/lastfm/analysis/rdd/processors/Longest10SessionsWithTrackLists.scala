@@ -10,11 +10,11 @@ import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
 // Extends Serializable to accommodate groupEvents
-class PartCProcessor extends Serializable {
+object Longest10SessionsWithTrackLists {
 
   val SESSION_THRESHOLD = 20
 
-  def process(sc: SparkContext, dataFilePath: String): RDD[Session] = {
+  def apply(dataFilePath: String)(implicit sc: SparkContext): RDD[Session] = {
     val listenRecords = sc.textFile(dataFilePath)
       .map(ListeningDataParser.getListenEvents)
       .filter(_.timestamp != LocalDateTime.MAX) // strip out any records where the datetime wasn't as expected
@@ -28,7 +28,7 @@ class PartCProcessor extends Serializable {
     listenRecords.values
   }
 
-  def groupEvents(events: Iterable[ListenEvent]): List[Session] = {
+  val groupEvents: Iterable[ListenEvent] => List[Session] = (events: Iterable[ListenEvent]) => {
     val firstEvent = events.head
     var sessions: List[Session] = List(Session(firstEvent.userId, firstEvent.timestamp, firstEvent.timestamp, List((firstEvent.artist, firstEvent.track))))
 

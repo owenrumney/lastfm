@@ -5,15 +5,9 @@ import lastfm.analysis.rdd.ListeningDataParser.TrackDetail
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
-class PartBProcessor {
-  /** *
-    * Returns the 100 most played songs and the number of times played
-    *
-    * @param sc           - the SparkContext to use
-    * @param dataFilePath - the path to the input file
-    * @return - an RDD with the ((artist, track), count))
-    */
-  def process(sc: SparkContext, dataFilePath: String): RDD[(TrackDetail, Int)] = {
+object Top100SongsWithPlayCounts {
+
+  def apply(dataFilePath: String)(implicit sc: SparkContext): RDD[(TrackDetail, Int)] = {
     val listenRecords = sc.textFile(dataFilePath)
       .map(d => (ListeningDataParser.getArtistTrackListenData(d), 1))
 

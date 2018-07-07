@@ -1,8 +1,9 @@
 package lastfm.analysis.rdd
 
-import lastfm.analysis.rdd.processors.PartBProcessor
+import lastfm.analysis.rdd.processors.Top100SongsWithPlayCounts
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
+import org.apache.spark.SparkContext
 
 object PartBDriver {
   def main(args: Array[String]): Unit = {
@@ -13,7 +14,9 @@ object PartBDriver {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
-    val results = new PartBProcessor().process(LocalContextProvider(getClass.getSimpleName), inputFilePath).cache()
+    implicit val sparkSession: SparkContext = LocalContextProvider(getClass.getSimpleName)
+
+    val results = Top100SongsWithPlayCounts(inputFilePath).cache()
     // save the output
     results
       .map(rd => (rd._1.artist, rd._1.track, rd._2))

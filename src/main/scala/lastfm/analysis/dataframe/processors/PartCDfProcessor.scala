@@ -1,5 +1,5 @@
 package lastfm.analysis.dataframe.processors
 
-class PartCDfProcessor {
+object PartCDfProcessor {
 
 }

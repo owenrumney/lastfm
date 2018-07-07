@@ -1,8 +1,10 @@
 package lastfm.analysis.dataframe
 
 import lastfm.analysis.dataframe.processors.PartBDfProcessor
+import lastfm.analysis.dataframe.PartADataFrame.getClass
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
+import org.apache.spark.sql.SparkSession
 
 
 object PartBDataFrame {
@@ -14,7 +16,9 @@ object PartBDataFrame {
     assert(!inputFilePath.isEmpty)
     assert(!outputPath.isEmpty)
 
-    val df = new PartBDfProcessor().process(LocalSessionProvider(getClass.getSimpleName), inputFilePath).cache()
+    implicit val spark: SparkSession = LocalSessionProvider(getClass.getSimpleName)
+
+    val df = PartBDfProcessor(inputFilePath).cache()
 
     df.write.csv(outputPath)
 
