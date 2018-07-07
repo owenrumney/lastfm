@@ -2,6 +2,7 @@ language: scala
 scala:
   2.11.11
 
-script:
-  sbt compile coverage test
-  sbt coverageReport
+stage: test
+script: sbt compile coverage test
+stage: coverage check
+script: sbt coverageReport
