@@ -2,20 +2,20 @@ package lastfm.analysis.rdd
 
 import org.scalatest.FunSuite
 
-class PartBDriverTest extends FunSuite {
+class TaskDriverTest extends FunSuite {
 
   test("missing input causes exception") {
     intercept[AssertionError] {
-      PartBDriver.main(Array())
+      TaskDriver.main(Array())
     }
     intercept[AssertionError] {
-      PartBDriver.main(Array("", ""))
+      TaskDriver.main(Array("", ""))
     }
     intercept[AssertionError] {
-      PartBDriver.main(Array("/test/input", ""))
+      TaskDriver.main(Array("/test/input", ""))
     }
     intercept[AssertionError] {
-      PartBDriver.main(Array("", "/test/output"))
+      TaskDriver.main(Array("", "/test/output"))
     }
   }
 }
