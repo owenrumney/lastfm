@@ -1,8 +1,9 @@
 language: scala
 scala:
   2.11.11
-
-stage: test
-script: sbt compile coverage test
-stage: coverage check
-script: sbt coverageReport
+jobs:
+  include:
+    stage: test
+    script: sbt compile coverage test
+    stage: coverage check
+    script: sbt coverageReport
