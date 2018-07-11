@@ -5,14 +5,17 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 import lastfm.analysis.ListeningDataParser
-import lastfm.analysis.ListeningDataParser.ListenEvent
+import lastfm.analysis.Session
+import lastfm.analysis.ListenEvent
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
-// Extends Serializable to accommodate groupEvents
+/**
+  * Get the 10 longest sessions with the tracks that were played in the session
+  */
 object Longest10SessionsWithTrackLists {
 
-  val SESSION_THRESHOLD = 20
+  implicit val MaxAllowedSessionGapBetweenTracks: Int = 20
 
   def apply(dataFilePath: String)(implicit sc: SparkContext): RDD[Session] = {
     val listenRecords = sc.textFile(dataFilePath)
@@ -29,20 +32,21 @@ object Longest10SessionsWithTrackLists {
   }
 
   val groupEvents: Iterable[ListenEvent] => List[Session] = (events: Iterable[ListenEvent]) => {
-    val firstEvent = events.head
-    var sessions: List[Session] = List(Session(firstEvent.userId, firstEvent.timestamp, firstEvent.timestamp, List((firstEvent.artist, firstEvent.track))))
+    import lastfm.analysis.SessionExtensions._
 
-    events.tail.foreach(e => {
-      if (Duration.between(sessions.head.lastTs, e.timestamp).toMinutes > SESSION_THRESHOLD) {
-        sessions = Session(e.userId, e.timestamp, e.timestamp, List((e.artist, e.track))) :: sessions
+    var sessions: List[Session] = {
+      val firstEvent = events.head
+      List(Session(firstEvent.userId, firstEvent.timestamp, firstEvent.timestamp, List((firstEvent.artist, firstEvent.track))))
+    }
+
+    events.tail.foreach(event => {
+      if (event inSession sessions.head) {
+        sessions = Session(event.userId, event.timestamp, event.timestamp, List((event.artist, event.track))) :: sessions
       } else {
-        sessions.head.tracks = (e.artist, e.track) :: sessions.head.tracks
-        sessions.head.lastTs = e.timestamp
+        sessions.head.tracks = (event.artist, event.track) :: sessions.head.tracks
+        sessions.head.lastTs = event.timestamp
       }
     })
     sessions
   }
-
-  case class Session(userId: String, firstTs: LocalDateTime, var lastTs: LocalDateTime, var tracks: List[(String, String)])
-
-}
+  }
