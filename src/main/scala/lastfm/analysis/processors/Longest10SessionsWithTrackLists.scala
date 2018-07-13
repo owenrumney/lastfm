@@ -41,10 +41,10 @@ object Longest10SessionsWithTrackLists {
 
     events.tail.foreach(event => {
       if (event inSession sessions.head) {
-        sessions = Session(event.userId, event.timestamp, event.timestamp, List((event.artist, event.track))) :: sessions
-      } else {
         sessions.head.tracks = (event.artist, event.track) :: sessions.head.tracks
         sessions.head.lastTs = event.timestamp
+      } else {
+        sessions = Session(event.userId, event.timestamp, event.timestamp, List((event.artist, event.track))) :: sessions
       }
     })
     sessions
