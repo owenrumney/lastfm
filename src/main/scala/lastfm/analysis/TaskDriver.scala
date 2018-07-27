@@ -34,7 +34,6 @@ object TaskDriver {
       results.saveAsTextFile(outputPath)
     }
 
-
     // write to console for output list - Only using because its a small dataset
     results.foreach(r => println(s"${r._1}: ${r._2}"))
   }
@@ -49,7 +48,6 @@ object TaskDriver {
         .saveAsTextFile(outputPath)
     }
 
-
     // write to console for output list - Only using because its a small dataset
     results.foreach(r => println(s"${r._1.artist} - ${r._1.track}: ${r._2}"))
   }
@@ -61,7 +59,6 @@ object TaskDriver {
       results
         .map(r => (r.userId, r.firstTs, r.lastTs, r.tracks.reverse))
         .saveAsTextFile(outputPath)
-
     }
 
     // write to console for output list - Only using because its a small dataset
